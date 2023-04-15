@@ -1,0 +1,100 @@
+CONSIGNES SQL :
+
+1. Écrivez une requête SQL pour récupérer les noms des clients qui ont commandé au moins un widget et au moins un gadget , 
+   ainsi que le coût total des widgets et gadgets commandés par chaque client .  Le coût de chaque article doit être calculé 
+   en multipliant la quantité par le prix du produit.
+2. Écrivez une requête pour récupérer les noms des clients qui ont commandé au moins un widget, 
+   ainsi que le coût total des widgets commandés par chaque client.
+3. Rédigez une requête pour récupérer les noms des clients qui ont passé une commande pour au moins un gadget, 
+   ainsi que le coût total des gadgets commandés par chaque client.
+4. Écrivez une requête pour récupérer les noms des clients qui ont commandé au moins un doohickey, 
+   ainsi que le coût total des doohickeys commandés par chaque client.
+5. Rédigez une requête pour récupérer le nombre total de widgets et de gadgets commandés par chaque client, 
+   ainsi que le coût total des commandes.
+6. Écrivez une requête pour récupérer les noms des produits qui ont été commandés par au moins un client, 
+   ainsi que la quantité totale de chaque produit commandé.
+7. Rédigez une requête pour récupérer les noms des clients qui ont passé le plus de commandes, 
+   ainsi que le nombre total de commandes passées par chaque client.
+8. Rédigez une requête pour récupérer les noms des produits les plus commandés, 
+   ainsi que la quantité totale de chaque produit commandé.
+9. Écrivez une requête pour récupérer les noms des clients qui ont passé une commande chaque jour de la semaine, 
+   ainsi que le nombre total de commandes passées par chaque client.
+
+===========================================    ANSWERS THE QUESTIONS    ======================================================= 
+
+Requete SQL N°1  
+        SELECT customer.Name, SUM(Product.Price*Orders.Quantity) AS Total_price
+        FROM customer
+        INNER JOIN orders ON customer.Customer_Id = orders.Customer_Id
+        INNER JOIN product ON orders.Product_Id = product.Product_Id
+        WHERE Product.Name  IN ('Wiget', 'Gadget')
+        GROUP BY customer.Customer_Id;
+        
+
+Requete SQL N°2
+        SELECT customer.Name, SUM(Product.Price*Orders.Quantity) AS Total_price
+        FROM customer
+        INNER JOIN orders ON customer.Customer_Id = orders.Customer_Id
+        INNER JOIN product ON orders.Product_Id = product.Product_Id
+        WHERE Product.Name  IN ('Wiget')
+        GROUP BY customer.Customer_Id;
+
+
+Requete SQL N°3
+        SELECT customer.Name, SUM(Product.Price*Orders.Quantity) AS Total_price
+        FROM customer
+        INNER JOIN orders ON customer.Customer_Id = orders.Customer_Id
+        INNER JOIN product ON orders.Product_Id = product.Product_Id
+        WHERE Product.Name  IN ('Gadget')
+        GROUP BY customer.Customer_Id;
+
+ 
+Requete SQL N°4
+        SELECT customer.Name, SUM(Product.Price*Orders.Quantity) AS Total_price
+        FROM customer
+        INNER JOIN orders ON customer.Customer_Id = orders.Customer_Id
+        INNER JOIN product ON orders.Product_Id = product.Product_Id
+        WHERE Product.Name  IN ('doohikey')
+        GROUP BY customer.Customer_Id;
+
+
+Requete SQL N°5
+        SELECT customer.Name, SUM(Orders.Quantity) AS Total_Qty, SUM(Product.Price*Orders.Quantity) AS Total_price
+        FROM customer
+        INNER JOIN orders ON customer.Customer_Id = orders.Customer_Id
+        INNER JOIN product ON orders.Product_Id = product.Product_Id
+        WHERE Product.Name  IN ('Wiget', 'Gadget')
+        GROUP BY customer.Customer_Id;
+
+
+Requete SQL N°6
+        SELECT Product.Name, SUM(Orders.Quantity) AS Total_Qty
+        FROM Product
+        INNER JOIN Orders ON Product.Product_Id = orders.Product_Id
+        GROUP BY Product.Product_Id
+        HAVING Total_Qty > 0;
+
+
+Requete SQL N°7 
+        SELECT Customer.Name, COUNT(Order_Id) AS Total_Order
+        FROM customer
+        INNER JOIN Orders ON Customer.Customer_Id = orders.Customer_Id
+        GROUP BY Customer.Name
+
+
+Requete SQL N°8 
+        SELECT Product.Name, SUM(Quantity) AS Total_Qty
+        FROM Product
+        INNER JOIN Orders ON Product.Product_Id = orders.Product_Id
+        GROUP BY Product.Name
+        
+
+Requete SQL N°9
+        SELECT Customer.Name, COUNT(Order_Id) AS Total_Order
+        FROM Customer
+        INNER JOIN Orders ON Customer.Customer_Id = orders.Customer_Id
+        GROUP BY Customer.Name
+        HAVING Total_Order = 6
+
+
+
